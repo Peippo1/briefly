@@ -1,4 +1,13 @@
 
+![Python CI](https://github.com/Peippo1/briefly/actions/workflows/blank.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.11-blue)
+
+![Built with Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit)
+![Dockerized](https://img.shields.io/badge/Dockerized-Yes-blue?logo=docker)
+![Powered by Databricks](https://img.shields.io/badge/Powered%20by-Databricks-orange?logo=databricks)
+![Runs on GCP](https://img.shields.io/badge/Runs%20on-Google%20Cloud-blue?logo=googlecloud)
+
 
 # 📰 Briefly
 
