@@ -17,6 +17,7 @@ if not api_key:
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel(model_name="models/gemini-1.5-pro")
 
+
 def summarize_headline(headline: str) -> str:
     try:
         prompt = f"Summarize this news headline in one sentence: '{headline}'"
@@ -25,6 +26,7 @@ def summarize_headline(headline: str) -> str:
     except Exception as e:
         print(f"Error summarizing: {headline[:60]}... – {e}")
         return "Summary unavailable"
+
 
 def summarize_stories(stories: list, delay_seconds=1) -> list:
     summarized = []
@@ -35,6 +37,7 @@ def summarize_stories(stories: list, delay_seconds=1) -> list:
         summarized.append(story)
         time.sleep(delay_seconds)  # 🧘 Throttle to avoid hitting rate limits
     return summarized
+
 
 if __name__ == "__main__":
     from extract import extract_top_stories
