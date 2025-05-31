@@ -16,11 +16,14 @@
 ## 🚀 Features
 
 - Extract top news stories from Hacker News
-- Use Gemini 1.5 Pro for headline summarization
-- Clean and structure data using PySpark and Pandas
-- Display output in a Streamlit app
+- Summarize headlines using Gemini 1.5 Pro
+- Display summaries in a dynamic Streamlit app
+- Top navigation bar with Feed and Trending views
+- Light/Dark theme toggle in the header
+- Live date range and source filtering in the sidebar
+- Preview logos for each article (with fallback)
 - Optional support for Delta Tables, BigQuery, or CSV export
-- Free-tier compatible
+- Free-tier compatible (Google Gemini 1.5)
 
 ## 🧱 Tech Stack
 
@@ -65,10 +68,17 @@ briefly/
 ## 🧪 Run Locally
 
 ```bash
+# Create and activate your virtual environment (if needed)
+python3 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
 # Summarize latest headlines
 python etl/summarize.py
 
-# Run the frontend
+# Launch the frontend dashboard
 streamlit run webapp/app.py
 ```
 
