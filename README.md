@@ -1,17 +1,15 @@
-
 ![Python CI](https://github.com/Peippo1/briefly/actions/workflows/blank.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 
 ![Built with Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit)
 ![Dockerized](https://img.shields.io/badge/Dockerized-Yes-blue?logo=docker)
-![Powered by Databricks](https://img.shields.io/badge/Powered%20by-Databricks-orange?logo=databricks)
 ![Runs on GCP](https://img.shields.io/badge/Runs%20on-Google%20Cloud-blue?logo=googlecloud)
 
 
 # 📰 Briefly
 
-**Briefly** is a lightweight, AI-powered ETL pipeline that pulls trending news headlines, summarizes them using Google's Gemini API, and displays them in a clean web app interface. It's built with Databricks, Python, and Streamlit — ideal for showcasing real-time NLP + data engineering skills.
+**Briefly** is a lightweight, AI-powered ETL pipeline that pulls trending news headlines, summarizes them using Google's Gemini API, and displays them in a clean web app interface. It's built with Python, Streamlit, and GCP — ideal for showcasing real-time NLP + data engineering skills.
 
 ## 🚀 Features
 
@@ -22,13 +20,13 @@
 - Light/Dark theme toggle in the header
 - Live date range and source filtering in the sidebar
 - Preview logos for each article (with fallback)
-- Optional support for Delta Tables, BigQuery, or CSV export
+- Optional support for BigQuery or CSV export
 - Free-tier compatible (Google Gemini 1.5)
 
 ## 🧱 Tech Stack
 
 - **Python** (ETL scripts)
-- **Databricks** (processing environment)
+- **BigQuery** (cloud data warehouse)
 - **Gemini API** (summarization)
 - **Streamlit** (web UI)
 - **Terraform** (infra-as-code, optional)

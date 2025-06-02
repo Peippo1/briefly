@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  briefly:
+    build: .
+    container_name: briefly-app
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    restart: unless-stopped
