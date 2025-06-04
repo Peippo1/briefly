@@ -5,6 +5,7 @@
 ![Built with Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit)
 ![Dockerized](https://img.shields.io/badge/Dockerized-Yes-blue?logo=docker)
 ![Runs on GCP](https://img.shields.io/badge/Runs%20on-Google%20Cloud-blue?logo=googlecloud)
+![Terraform](https://img.shields.io/badge/Infrastructure-Terraform-623CE4?logo=terraform)
 
 
 # 📰 Briefly
