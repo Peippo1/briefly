@@ -2,12 +2,12 @@ from google.cloud import bigquery
 import os
 
 def test_bigquery_connection():
+    if not os.getenv('GOOGLE_APPLICATION_CREDENTIALS'):
+        print("GOOGLE_APPLICATION_CREDENTIALS is not set.")
     project_id = os.getenv('GCP_PROJECT')
-    if not project_id:
-        print("GCP_PROJECT environment variable is not set.")
-        return
-
-    client = bigquery.Client(project=project_id)
+    client = bigquery.Client(project=project_id) if project_id else bigquery.Client()
+    project_id = client.project  # ensure we have the actual project used
+    print(f"Using GCP Project: {project_id}")
 
     try:
         datasets = list(client.list_datasets())

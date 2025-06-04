@@ -58,7 +58,13 @@ briefly/
    ```
    GEMINI_API_KEY=your-api-key-here
    ```
-3. Install dependencies:
+3. Ensure your Google Cloud credentials are available:
+   ```
+   export GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/service_account.json
+   export GCP_PROJECT=your-gcp-project-id
+   ```
+   # (Required for BigQuery integration)
+4. Install dependencies:
    ```
    pip install -r requirements.txt
    ```
@@ -73,12 +79,29 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Summarize latest headlines
-python etl/summarize.py
+# Run full ETL pipeline (extract, summarize, and load into BigQuery)
+python etl/run_pipeline.py
 
 # Launch the frontend dashboard
 streamlit run webapp/app.py
 ```
+
+## 📡 BigQuery Integration
+
+If you want to store and analyze summaries in BigQuery:
+
+1. Set your GCP credentials and project ID as environment variables:
+   ```bash
+   export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account.json
+   export GCP_PROJECT=your-gcp-project-id
+   ```
+2. Run the setup script to create the dataset and table:
+   ```bash
+   python etl/setup_bigquery.py
+   ```
+3. Use `etl/run_pipeline.py` to automatically push new summaries to BigQuery.
+
+Summaries are stored in the `briefly_data.summaries` table with fields like `url`, `title`, `summary`, `source`, `published_at`, and `summarized_at`.
 
 ## 📜 License
 
