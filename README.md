@@ -51,6 +51,15 @@ briefly/
 └── README.md
 ```
 
+## 🛠 System Requirements
+
+To get started with this project, you'll need the following tools installed:
+
+- [Python 3.11+](https://www.python.org/downloads/)
+- [Terraform 1.3+](https://developer.hashicorp.com/terraform/downloads)
+- [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) – required for authenticating with GCP and managing infrastructure
+- [Streamlit](https://streamlit.io/) – installed via `pip install -r requirements.txt`
+
 ## 🔑 Environment Setup
 
 1. Clone the repo
@@ -102,6 +111,81 @@ If you want to store and analyze summaries in BigQuery:
 3. Use `etl/run_pipeline.py` to automatically push new summaries to BigQuery.
 
 Summaries are stored in the `briefly_data.summaries` table with fields like `url`, `title`, `summary`, `source`, `published_at`, and `summarized_at`.
+
+## 🏗️ Terraform Infrastructure
+
+You can provision the required GCP infrastructure using Terraform:
+
+1. Navigate to the Terraform directory:
+   ```bash
+   cd terraform/
+   ```
+
+2. Set your environment credentials (if not already):
+   ```bash
+   export GOOGLE_APPLICATION_CREDENTIALS=./.secrets/terraform-admin-key.json
+   ```
+
+3. Initialize the Terraform project:
+   ```bash
+   terraform init
+   ```
+
+4. Review the plan:
+   ```bash
+   terraform plan
+   ```
+
+5. Apply the infrastructure:
+   ```bash
+   terraform apply
+   ```
+
+Terraform will create:
+- A BigQuery dataset and summaries table
+- A service account with `bigquery.user` permissions
+
+## 🧹 Terraform Cleanup and Remote Backend (Optional)
+
+### Destroy Infrastructure
+
+To tear down all Terraform-managed resources:
+
+```bash
+terraform destroy
+```
+
+This will prompt you to confirm deletion of all provisioned infrastructure.
+
+---
+
+### Use a Remote Backend (Optional but Recommended)
+
+For team collaboration and state consistency, configure a remote backend using Google Cloud Storage (GCS):
+
+1. Create a GCS bucket (e.g. `briefly-terraform-state`)
+2. Enable versioning on the bucket:
+   ```bash
+   gsutil versioning set on gs://briefly-terraform-state
+   ```
+
+3. Add a backend config to your `provider.tf` or `main.tf`:
+
+```hcl
+terraform {
+  backend "gcs" {
+    bucket  = "briefly-terraform-state"
+    prefix  = "terraform/state"
+  }
+}
+```
+
+4. Reinitialize Terraform to migrate local state:
+```bash
+terraform init -migrate-state
+```
+
+This ensures your Terraform state is versioned, backed up, and team-ready.
 
 ## 📜 License
 

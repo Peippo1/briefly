@@ -6,3 +6,10 @@ __pycache__/
 venv/
 .DS_Store
 .secrets/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+crash.log
