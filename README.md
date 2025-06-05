@@ -1,14 +1,11 @@
-![Python CI](https://github.com/Peippo1/briefly/actions/workflows/blank.yml/badge.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.11-blue)
+| CI/CD | License | Python | Streamlit | Docker | GCP | Terraform |
+|:-----:|:-------:|:------:|:---------:|:------:|:---:|:---------:|
+| ![CI](https://github.com/Peippo1/briefly/actions/workflows/ci.yml/badge.svg) | ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg) | ![Python](https://img.shields.io/badge/python-3.11-blue) | ![Built with Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit) | ![Dockerized](https://img.shields.io/badge/Dockerized-Yes-blue?logo=docker) | ![Runs on GCP](https://img.shields.io/badge/Runs%20on-Google%20Cloud-blue?logo=googlecloud) | ![Terraform](https://img.shields.io/badge/Infrastructure-Terraform-623CE4?logo=terraform) |
 
-![Built with Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit)
-![Dockerized](https://img.shields.io/badge/Dockerized-Yes-blue?logo=docker)
-![Runs on GCP](https://img.shields.io/badge/Runs%20on-Google%20Cloud-blue?logo=googlecloud)
-![Terraform](https://img.shields.io/badge/Infrastructure-Terraform-623CE4?logo=terraform)
 
 
 # 📰 Briefly
+🔗 [Live Demo](https://briefly-ai.streamlit.app/)
 
 **Briefly** is a lightweight, AI-powered ETL pipeline that pulls trending news headlines, summarizes them using Google's Gemini API, and displays them in a clean web app interface. It's built with Python, Streamlit, and GCP — ideal for showcasing real-time NLP + data engineering skills.
 
@@ -145,6 +142,7 @@ You can provision the required GCP infrastructure using Terraform:
 Terraform will create:
 - A BigQuery dataset and summaries table
 - A service account with `bigquery.user` permissions
+ - GitHub Actions CI/CD validation pipeline
 
 ## 🧹 Terraform Cleanup and Remote Backend (Optional)
 
@@ -191,3 +189,7 @@ This ensures your Terraform state is versioned, backed up, and team-ready.
 ## 📜 License
 
 MIT — free to use, extend, and showcase.
+
+## ✅ Project Status
+
+This project is complete and production-ready. Further improvements (e.g. CI deployment, testing automation, or remote backends) can be added as future enhancements.

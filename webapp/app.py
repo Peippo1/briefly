@@ -1,5 +1,20 @@
 import sys
 import os
+import json
+
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if present
+load_dotenv()
+
+# Use Streamlit secrets in deployed environment
+if "GEMINI_API_KEY" in st.secrets:
+    os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
+if "GOOGLE_APPLICATION_CREDENTIALS_JSON" in st.secrets:
+    credentials = json.loads(st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/gcp-creds.json"
+    with open(os.environ["GOOGLE_APPLICATION_CREDENTIALS"], "w") as f:
+        json.dump(credentials, f)
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -13,6 +28,12 @@ def get_logo(domain):
     if domain:
         return f"https://logo.clearbit.com/{domain}"
     return "https://ui-avatars.com/api/?name=News&background=0D8ABC&color=fff"
+
+
+# Check for required API key
+if "GEMINI_API_KEY" not in os.environ:
+    st.error("❌ GEMINI_API_KEY not found. Please set it as an environment variable.")
+    st.stop()
 
 
 st.set_page_config(page_title="📰 Briefly", layout="wide", page_icon="📰")
@@ -225,3 +246,8 @@ elif st.session_state.page == "Trending":
             st.image(get_logo(domain), width=64)
             st.markdown(f"[🔗 Read more]({row['url']})")
         st.markdown("---")
+
+
+# Optional: Warn if no articles found
+if df.empty:
+    st.warning("No news items found for the selected filters.")
