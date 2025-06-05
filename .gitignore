@@ -6,6 +6,11 @@ __pycache__/
 venv/
 .DS_Store
 .secrets/
+.streamlit/secrets.toml
+
+# Python Artifacts
+__pycache__/
+*.pyc
 
 # Terraform
 .terraform/

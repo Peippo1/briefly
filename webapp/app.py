@@ -7,18 +7,23 @@ from dotenv import load_dotenv
 # Load environment variables from .env file if present
 load_dotenv()
 
+import streamlit as st
+
 # Use Streamlit secrets in deployed environment
 if "GEMINI_API_KEY" in st.secrets:
     os.environ["GEMINI_API_KEY"] = st.secrets["GEMINI_API_KEY"]
 if "GOOGLE_APPLICATION_CREDENTIALS_JSON" in st.secrets:
-    credentials = json.loads(st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"])
+    credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS_JSON"]
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/gcp-creds.json"
     with open(os.environ["GOOGLE_APPLICATION_CREDENTIALS"], "w") as f:
-        json.dump(credentials, f)
+        if isinstance(credentials, str):
+            creds_dict = json.loads(credentials)
+        else:
+            creds_dict = dict(credentials)
+        json.dump(creds_dict, f)
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import streamlit as st
 import pandas as pd
 from etl.summarize import summarize_stories
 from etl.extract import extract_top_stories
