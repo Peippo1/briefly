@@ -292,14 +292,14 @@ elif st.session_state.page == "Trending":
 
     slides_html = ""
     for _, row in trending.iterrows():
-        slides_html += f'''
+        slides_html += f"""
         <div class="swiper-slide">
           <img src="{get_logo(row['source'])}" style="width:64px;height:auto;margin-bottom:10px;" />
           <h4>{row["title"]}</h4>
           <p>{row["summary"]}</p>
           <a href="{row["url"]}" target="_blank">🔗 Read more</a>
         </div>
-        '''
+        """
 
     html(carousel_html.format(slides=slides_html), height=400)
 

@@ -6,14 +6,22 @@ import time
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
+
 def load_to_bigquery(data: list, dataset: str, table: str, mode: str = "WRITE_APPEND"):
     """Loads summarized news stories to BigQuery with deduplication and retry logic"""
-    
+
     if not data:
         logging.warning("No data to load.")
         return
 
-    allowed_fields = {"url", "title", "summary", "source", "published_at", "summarized_at"}
+    allowed_fields = {
+        "url",
+        "title",
+        "summary",
+        "source",
+        "published_at",
+        "summarized_at",
+    }
 
     project = os.getenv("GCP_PROJECT")
     client = bigquery.Client(project=project) if project else bigquery.Client()
@@ -26,7 +34,9 @@ def load_to_bigquery(data: list, dataset: str, table: str, mode: str = "WRITE_AP
         query_job = client.query(query)
         existing_urls = {row.url for row in query_job}
     except Exception as e:
-        logging.warning(f"Could not retrieve existing URLs from BigQuery. Proceeding without de-duplication. Error: {e}")
+        logging.warning(
+            f"Could not retrieve existing URLs from BigQuery. Proceeding without de-duplication. Error: {e}"
+        )
 
     cleaned_data = [
         {k: v for k, v in row.items() if k in allowed_fields}
@@ -35,7 +45,9 @@ def load_to_bigquery(data: list, dataset: str, table: str, mode: str = "WRITE_AP
     ]
 
     if not cleaned_data:
-        logging.info("No new unique rows to load. All entries already exist in BigQuery.")
+        logging.info(
+            "No new unique rows to load. All entries already exist in BigQuery."
+        )
         return
 
     df = pd.DataFrame(cleaned_data)
@@ -49,8 +61,10 @@ def load_to_bigquery(data: list, dataset: str, table: str, mode: str = "WRITE_AP
             logging.info(f"Loaded {len(df)} rows to {table_id} using mode '{mode}'")
             break
         except Exception as load_error:
-            logging.error(f"Attempt {attempt + 1} failed to load data to BigQuery: {load_error}")
+            logging.error(
+                f"Attempt {attempt + 1} failed to load data to BigQuery: {load_error}"
+            )
             if attempt < 2:
-                time.sleep(2 ** attempt)
+                time.sleep(2**attempt)
             else:
                 logging.critical("All retry attempts failed.")

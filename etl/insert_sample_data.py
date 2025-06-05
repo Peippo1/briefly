@@ -1,6 +1,7 @@
 from google.cloud import bigquery
 from datetime import datetime
 
+
 def insert_sample_data():
     client = bigquery.Client()
     table_id = f"{client.project}.briefly_data.summaries"
@@ -34,6 +35,7 @@ def insert_sample_data():
     print("Recent entries in summaries table:")
     for row in query_job:
         print(f"- {row['title']} ({row['url']}) at {row['summarized_at']}")
+
 
 if __name__ == "__main__":
     insert_sample_data()

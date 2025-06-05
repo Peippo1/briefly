@@ -1,5 +1,6 @@
 from google.cloud import bigquery
 
+
 def setup_bigquery():
     client = bigquery.Client()
     dataset_id = f"{client.project}.briefly_data"
@@ -33,6 +34,7 @@ def setup_bigquery():
         table = bigquery.Table(table_id, schema=schema)
         client.create_table(table)
         print(f"Created table {table_id}")
+
 
 if __name__ == "__main__":
     setup_bigquery()

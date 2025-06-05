@@ -1,9 +1,8 @@
-
-
 from extract import extract_top_stories
 from summarize import summarize_stories
 from load import load_to_bigquery
 import os
+
 
 def main():
     print("🚀 Starting ETL pipeline...")
@@ -29,6 +28,7 @@ def main():
     load_to_bigquery(summaries, dataset=dataset, table=table)
 
     print("✅ Pipeline completed successfully.")
+
 
 if __name__ == "__main__":
     main()
