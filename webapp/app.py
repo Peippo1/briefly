@@ -214,11 +214,15 @@ else:
         unsafe_allow_html=True,
     )
 
-st.title("📰 Briefly – AI News Summaries")
-st.caption("Real-time headlines summarized using Gemini 1.5 Pro")
+st.markdown('<h1 style="color:#183B4E;">📰 Briefly – AI News Summaries</h1>', unsafe_allow_html=True)
+st.markdown('<p style="color:#183B4E; font-size: 1rem;">Real-time headlines summarized using Gemini 1.5 Pro</p>', unsafe_allow_html=True)
 
 # Fetch and summarize data
-with st.spinner("Fetching and summarizing top headlines..."):
+with st.spinner("🌀 Fetching and summarizing top headlines..."):
+    st.markdown(
+        "<style>.stSpinner span { color: #183B4E !important; }</style>",
+        unsafe_allow_html=True,
+    )
     stories = extract_top_stories(10)
     summarized = summarize_stories(stories)
     df = pd.DataFrame(summarized)
