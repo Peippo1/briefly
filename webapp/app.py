@@ -75,7 +75,7 @@ st.markdown(
     font-size: 1rem;
 }
 html, body, .main, section.main, div.block-container {
-    background-color: #FCEF91 !important;
+    background-color: #F3F3E0 !important;
     color: #F5F5F5 !important;
     font-family: 'Roboto', sans-serif !important;
 }
@@ -142,7 +142,7 @@ if st.session_state.theme == "Dark":
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
         html, body, .main, section.main, div.block-container {
-            background-color: #FCEF91 !important;
+            background-color: #F3F3E0 !important;
             color: #F5F5F5 !important;
             font-family: 'Roboto', sans-serif !important;
         }
@@ -162,7 +162,7 @@ if st.session_state.theme == "Dark":
             color: white;
         }
         .swiper-slide {
-          background: #FB9E3A;
+          background: #27548A;
           border-radius: 6px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           padding: 20px;
@@ -181,7 +181,7 @@ else:
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
         html, body, .main, section.main, div.block-container {
-            background-color: #FCEF91 !important;
+            background-color: #F3F3E0 !important;
             color: #F5F5F5 !important;
             font-family: 'Roboto', sans-serif !important;
         }
@@ -201,7 +201,7 @@ else:
             color: black;
         }
         .swiper-slide {
-          background: #FB9E3A;
+          background: #27548A;
           border-radius: 6px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           padding: 20px;
@@ -255,10 +255,10 @@ if st.session_state.page == "Feed":
             domain = None
             if row["url"]:
                 domain = row["url"].split("/")[2]
-            bg_color = "#FB9E3A"
+            bg_color = "#27548A"
             st.markdown(
                 f"""
-                <div style="border-radius:6px; padding:15px; margin:10px 0; background-color:{bg_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="border-radius:6px; padding:15px; margin:10px 0; background-color:#27548A; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                     <div style="display:flex; align-items:center;">
                         <img src="{get_logo(domain)}" width="48" style="margin-right:10px;" />
                         <div>
@@ -289,7 +289,7 @@ elif st.session_state.page == "Trending":
       padding-bottom: 40px;
     }}
     .swiper-slide {{
-      background: #FB9E3A;
+      background: #27548A;
       border-radius: 6px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 20px;
