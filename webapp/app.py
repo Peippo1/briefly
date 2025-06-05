@@ -48,7 +48,7 @@ st.markdown(
     """
 <style>
 .navbar {
-    background-color: #f0f2f6;
+    background-color: #80D8C3;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -71,6 +71,10 @@ st.markdown(
 }
 .theme-toggle {
     font-size: 1rem;
+}
+html, body, .main, section.main {
+    background-color: #4DA8DA;
+    color: #F5F5F5;
 }
 </style>
 """,
@@ -132,20 +136,20 @@ if st.session_state.theme == "Dark":
     st.markdown(
         """
         <style>
-        body {
-            background-color: #0e1117;
-            color: #fafafa;
+        html, body, .main, section.main {
+            background-color: #4DA8DA;
+            color: #F5F5F5;
         }
         .headline-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
-            color: #ffffff;
+            color: #F5F5F5;
         }
         .summary-block {
             font-size: 1rem;
             line-height: 1.6;
-            color: #dcdcdc;
+            color: #F5F5F5;
         }
         .stButton>button {
             background-color: #262730;
@@ -159,20 +163,20 @@ else:
     st.markdown(
         """
         <style>
-        body {
-            background-color: #ffffff;
-            color: #000000;
+        html, body, .main, section.main {
+            background-color: #4DA8DA;
+            color: #F5F5F5;
         }
         .headline-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
-            color: #111111;
+            color: #F5F5F5;
         }
         .summary-block {
             font-size: 1rem;
             line-height: 1.6;
-            color: #444444;
+            color: #F5F5F5;
         }
         .stButton>button {
             background-color: #f0f0f0;
@@ -220,37 +224,84 @@ if st.session_state.page == "Feed":
     st.markdown("---")
 
     for _, row in df.iterrows():
-        st.markdown(
-            f"📅 *{row['datetime'].strftime('%b %d, %Y %I:%M %p')}*",
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f"<div class='headline-title'>{row['title']}</div>", unsafe_allow_html=True
-        )
-        st.info(row["summary"])
-        if row["url"]:
-            domain = row["url"].split("/")[2]
-            st.image(get_logo(domain), width=64)
-            st.markdown(f"[🔗 Read more]({row['url']})")
-        st.markdown("---")
+        with st.container():
+            domain = None
+            if row["url"]:
+                domain = row["url"].split("/")[2]
+            bg_color = "#FFD66B"
+            st.markdown(
+                f"""
+                <div style="border-radius:10px; padding:15px; margin:10px 0; background-color:{bg_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                    <div style="display:flex; align-items:center;">
+                        <img src="{get_logo(domain)}" width="48" style="margin-right:10px;" />
+                        <div>
+                            <div style="font-size: 0.9rem; color: #666;">📅 {row['datetime'].strftime('%b %d, %Y %I:%M %p')}</div>
+                            <h4 style="margin: 0;">{row['title']}</h4>
+                        </div>
+                    </div>
+                    <p style="margin-top:10px;">{row['summary']}</p>
+                    <a href="{row['url']}" target="_blank" style="color:#1a73e8;">🔗 Read more</a>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
 
 elif st.session_state.page == "Trending":
+    from streamlit.components.v1 import html
+
     st.header("🔥 Trending Now")
     trending = df.sort_values(by="time", ascending=False).head(5)
+
+    carousel_html = """
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <style>
+    .swiper-container {{
+      width: 100%;
+      padding-top: 20px;
+      padding-bottom: 40px;
+    }}
+    .swiper-slide {{
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }}
+    </style>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {slides}
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <script>
+      new Swiper('.swiper-container', {{
+        loop: true,
+        autoplay: {{
+          delay: 5000,
+        }},
+        pagination: {{
+          el: '.swiper-pagination',
+        }},
+      }});
+    </script>
+    """
+
+    slides_html = ""
     for _, row in trending.iterrows():
-        st.markdown(
-            f"📅 *{row['datetime'].strftime('%b %d, %Y %I:%M %p')}*",
-            unsafe_allow_html=True,
-        )
-        st.markdown(
-            f"<div class='headline-title'>{row['title']}</div>", unsafe_allow_html=True
-        )
-        st.info(row["summary"])
-        if row["url"]:
-            domain = row["url"].split("/")[2]
-            st.image(get_logo(domain), width=64)
-            st.markdown(f"[🔗 Read more]({row['url']})")
-        st.markdown("---")
+        slides_html += f'''
+        <div class="swiper-slide">
+          <img src="{get_logo(row['source'])}" style="width:64px;height:auto;margin-bottom:10px;" />
+          <h4>{row["title"]}</h4>
+          <p>{row["summary"]}</p>
+          <a href="{row["url"]}" target="_blank">🔗 Read more</a>
+        </div>
+        '''
+
+    html(carousel_html.format(slides=slides_html), height=400)
 
 
 # Optional: Warn if no articles found
