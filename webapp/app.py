@@ -72,9 +72,9 @@ st.markdown(
 .theme-toggle {
     font-size: 1rem;
 }
-html, body, .main, section.main {
-    background-color: #4DA8DA;
-    color: #F5F5F5;
+html, body, .main, section.main, div.block-container {
+    background-color: #4DA8DA !important;
+    color: #F5F5F5 !important;
 }
 </style>
 """,
@@ -136,9 +136,9 @@ if st.session_state.theme == "Dark":
     st.markdown(
         """
         <style>
-        html, body, .main, section.main {
-            background-color: #4DA8DA;
-            color: #F5F5F5;
+        html, body, .main, section.main, div.block-container {
+            background-color: #4DA8DA !important;
+            color: #F5F5F5 !important;
         }
         .headline-title {
             font-size: 1.25rem;
@@ -163,9 +163,9 @@ else:
     st.markdown(
         """
         <style>
-        html, body, .main, section.main {
-            background-color: #4DA8DA;
-            color: #F5F5F5;
+        html, body, .main, section.main, div.block-container {
+            background-color: #4DA8DA !important;
+            color: #F5F5F5 !important;
         }
         .headline-title {
             font-size: 1.25rem;
