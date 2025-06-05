@@ -47,6 +47,8 @@ st.set_page_config(page_title="📰 Briefly", layout="wide", page_icon="📰")
 st.markdown(
     """
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 .navbar {
     background-color: #80D8C3;
     padding: 10px 20px;
@@ -73,8 +75,9 @@ st.markdown(
     font-size: 1rem;
 }
 html, body, .main, section.main, div.block-container {
-    background-color: #4DA8DA !important;
+    background-color: #FCEF91 !important;
     color: #F5F5F5 !important;
+    font-family: 'Roboto', sans-serif !important;
 }
 </style>
 """,
@@ -136,9 +139,12 @@ if st.session_state.theme == "Dark":
     st.markdown(
         """
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
         html, body, .main, section.main, div.block-container {
-            background-color: #4DA8DA !important;
+            background-color: #FCEF91 !important;
             color: #F5F5F5 !important;
+            font-family: 'Roboto', sans-serif !important;
         }
         .headline-title {
             font-size: 1.25rem;
@@ -155,6 +161,15 @@ if st.session_state.theme == "Dark":
             background-color: #262730;
             color: white;
         }
+        .swiper-slide {
+          background: #FB9E3A;
+          border-radius: 6px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
         </style>
     """,
         unsafe_allow_html=True,
@@ -163,9 +178,12 @@ else:
     st.markdown(
         """
         <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
         html, body, .main, section.main, div.block-container {
-            background-color: #4DA8DA !important;
+            background-color: #FCEF91 !important;
             color: #F5F5F5 !important;
+            font-family: 'Roboto', sans-serif !important;
         }
         .headline-title {
             font-size: 1.25rem;
@@ -181,6 +199,15 @@ else:
         .stButton>button {
             background-color: #f0f0f0;
             color: black;
+        }
+        .swiper-slide {
+          background: #FB9E3A;
+          border-radius: 6px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         }
         </style>
     """,
@@ -228,10 +255,10 @@ if st.session_state.page == "Feed":
             domain = None
             if row["url"]:
                 domain = row["url"].split("/")[2]
-            bg_color = "#FFD66B"
+            bg_color = "#FB9E3A"
             st.markdown(
                 f"""
-                <div style="border-radius:10px; padding:15px; margin:10px 0; background-color:{bg_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="border-radius:6px; padding:15px; margin:10px 0; background-color:{bg_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                     <div style="display:flex; align-items:center;">
                         <img src="{get_logo(domain)}" width="48" style="margin-right:10px;" />
                         <div>
@@ -262,8 +289,8 @@ elif st.session_state.page == "Trending":
       padding-bottom: 40px;
     }}
     .swiper-slide {{
-      background: #fff;
-      border-radius: 12px;
+      background: #FB9E3A;
+      border-radius: 6px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 20px;
       display: flex;
