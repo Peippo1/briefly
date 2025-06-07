@@ -27,26 +27,47 @@
 - **BigQuery** (cloud data warehouse)
 - **Gemini API** (summarization)
 - **Streamlit** (web UI)
-- **Terraform** (infra-as-code, optional)
+- **Terraform** (infra-as-code)
 - **Docker** (optional for app deployment)
 
 ## 📂 Project Structure
 
 ```
 briefly/
-├── etl/
+├── docker-compose.yaml
+├── Dockerfile
+├── etl
+│   ├── __pycache__
 │   ├── extract.py
-│   ├── transform.py
+│   ├── insert_sample_data.py
+│   ├── list_models.py
+│   ├── load.py
+│   ├── run_pipeline.py
+│   ├── setup_bigquery.py
 │   ├── summarize.py
-│   └── load.py
-├── webapp/
-│   └── app.py
-├── notebooks/
-│   └── databricks_etl.ipynb
-├── terraform/
-│   └── main.tf
+│   ├── test_bigquery.py
+│   └── transform.py
+├── LICENSE
+├── notebooks
+├── README.md
 ├── requirements.txt
-└── README.md
+├── terraform
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── provider.tf
+│   ├── terraform.tfstate
+│   ├── terraform.tfstate.backup
+│   ├── terraform.tfvars
+│   └── variables.tf
+├── venv
+│   ├── bin
+│   ├── etc
+│   ├── include
+│   ├── lib
+│   ├── pyvenv.cfg
+│   └── share
+└── webapp
+    └── app.py
 ```
 
 ## 🛠 System Requirements
