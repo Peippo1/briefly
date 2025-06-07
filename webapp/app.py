@@ -32,7 +32,7 @@ from etl.extract import extract_top_stories
 def get_logo(domain):
     if domain:
         return f"https://logo.clearbit.com/{domain}"
-    return "https://ui-avatars.com/api/?name=News&background=0D8ABC&color=fff"
+    return "https://ui-avatars.com/api/?name=News&background=FFCF50&color=000000"
 
 
 # Check for required API key
@@ -50,7 +50,7 @@ st.markdown(
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .navbar {
-    background-color: #80D8C3;
+    background-color: #FFCF50;
     padding: 10px 20px;
     display: flex;
     align-items: center;
@@ -75,8 +75,8 @@ st.markdown(
     font-size: 1rem;
 }
 html, body, .main, section.main, div.block-container {
-    background-color: #F3F3E0 !important;
-    color: #F5F5F5 !important;
+    background-color: #FEFAE0 !important;
+    color: #626F47 !important;
     font-family: 'Roboto', sans-serif !important;
 }
 </style>
@@ -90,49 +90,51 @@ if "page" not in st.session_state:
 if "theme" not in st.session_state:
     st.session_state.theme = "Light"
 
-# Navbar container
-nav_container = st.container()
 
-with nav_container:
-    cols = st.columns([3, 1])
-    with cols[0]:
-        st.markdown(
-            """
-        <div class="navbar">
-            <button id="feed_btn" class="{feed_class}">Feed</button>
-            <button id="trending_btn" class="{trending_class}">Trending</button>
-        </div>
-        """.format(
-                feed_class="selected" if st.session_state.page == "Feed" else "",
-                trending_class=(
-                    "selected" if st.session_state.page == "Trending" else ""
-                ),
-            ),
-            unsafe_allow_html=True,
+st.markdown('<h1 style="color:#183B4E;">📰 Briefly – AI News Summaries</h1>', unsafe_allow_html=True)
+st.markdown('<p style="color:#183B4E; font-size: 1rem;">Real-time headlines summarized using Gemini 1.5 Pro</p>', unsafe_allow_html=True)
+
+# Dropdown and dark mode toggle in a flex container
+st.markdown("""
+    <style>
+    .control-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 0;
+    }
+    .control-left {
+        flex: 1;
+        max-width: 25%;
+    }
+    .control-right {
+        flex: 1;
+        text-align: right;
+    }
+    </style>
+    <div class="control-row">
+        <div class="control-left" id="dropdown-container"></div>
+        <div class="control-right" id="toggle-container"></div>
+    </div>
+""", unsafe_allow_html=True)
+
+with st.container():
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        page = st.selectbox(
+            "Select Page",
+            ["Feed", "Trending"],
+            index=0 if st.session_state.page == "Feed" else 1,
+            key="page_select"
         )
-    with cols[1]:
-        theme = st.radio(
-            "Theme toggle",
-            ["Light", "Dark"],
-            index=0 if st.session_state.theme == "Light" else 1,
-            horizontal=True,
-            key="theme_radio",
-            label_visibility="collapsed",
+        st.session_state.page = page
+    with col2:
+        dark_mode = st.toggle(
+            "Dark Mode",
+            value=True if st.session_state.theme == "Dark" else False,
+            key="theme_toggle"
         )
-
-# Update session state based on radio and navbar button clicks via JS
-# Since Streamlit does not natively support JS events on buttons,
-# we handle theme toggle via radio and page via st.selectbox workaround below.
-
-page = st.selectbox(
-    "Page select",
-    ["Feed", "Trending"],
-    index=0 if st.session_state.page == "Feed" else 1,
-    key="page_select",
-    label_visibility="collapsed",
-)
-st.session_state.page = page
-st.session_state.theme = theme
+        st.session_state.theme = "Dark" if dark_mode else "Light"
 
 # Apply theme CSS based on session_state.theme
 if st.session_state.theme == "Dark":
@@ -142,27 +144,27 @@ if st.session_state.theme == "Dark":
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
         html, body, .main, section.main, div.block-container {
-            background-color: #F3F3E0 !important;
-            color: #F5F5F5 !important;
+            background-color: #FEFAE0 !important;
+            color: #626F47 !important;
             font-family: 'Roboto', sans-serif !important;
         }
         .headline-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
-            color: #F5F5F5;
+            color: #626F47;
         }
         .summary-block {
             font-size: 1rem;
             line-height: 1.6;
-            color: #F5F5F5;
+            color: #626F47;
         }
         .stButton>button {
             background-color: #262730;
             color: white;
         }
         .swiper-slide {
-          background: #27548A;
+          background: #FFCF50;
           border-radius: 6px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           padding: 20px;
@@ -181,27 +183,27 @@ else:
         @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
         html, body, .main, section.main, div.block-container {
-            background-color: #F3F3E0 !important;
-            color: #F5F5F5 !important;
+            background-color: #FEFAE0 !important;
+            color: #626F47 !important;
             font-family: 'Roboto', sans-serif !important;
         }
         .headline-title {
             font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 0.25rem;
-            color: #F5F5F5;
+            color: #626F47;
         }
         .summary-block {
             font-size: 1rem;
             line-height: 1.6;
-            color: #F5F5F5;
+            color: #626F47;
         }
         .stButton>button {
             background-color: #f0f0f0;
             color: black;
         }
         .swiper-slide {
-          background: #27548A;
+          background: #FFCF50;
           border-radius: 6px;
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           padding: 20px;
@@ -214,13 +216,10 @@ else:
         unsafe_allow_html=True,
     )
 
-st.markdown('<h1 style="color:#183B4E;">📰 Briefly – AI News Summaries</h1>', unsafe_allow_html=True)
-st.markdown('<p style="color:#183B4E; font-size: 1rem;">Real-time headlines summarized using Gemini 1.5 Pro</p>', unsafe_allow_html=True)
-
 # Fetch and summarize data
 with st.spinner("🌀 Fetching and summarizing top headlines..."):
     st.markdown(
-        "<style>.stSpinner span { color: #183B4E !important; }</style>",
+        "<style>.stSpinner span { color: #626F47 !important; }</style>",
         unsafe_allow_html=True,
     )
     stories = extract_top_stories(10)
@@ -259,18 +258,18 @@ if st.session_state.page == "Feed":
             domain = None
             if row["url"]:
                 domain = row["url"].split("/")[2]
-            bg_color = "#27548A"
+            bg_color = "#FFCF50"
             st.markdown(
                 f"""
-                <div style="border-radius:6px; padding:15px; margin:10px 0; background-color:#27548A; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <div style="border-radius:6px; padding:15px; margin:10px 0; background-color:#FFCF50; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
                     <div style="display:flex; align-items:center;">
                         <img src="{get_logo(domain)}" width="48" style="margin-right:10px;" />
                         <div>
-                            <div style="font-size: 0.9rem; color: #666;">📅 {row['datetime'].strftime('%b %d, %Y %I:%M %p')}</div>
-                            <h4 style="margin: 0;">{row['title']}</h4>
+                            <div style="font-size: 0.9rem; color: #626F47;">📅 {row['datetime'].strftime('%b %d, %Y %I:%M %p')}</div>
+                            <h4 style="margin: 0; color: #626F47;">{row['title']}</h4>
                         </div>
                     </div>
-                    <p style="margin-top:10px;">{row['summary']}</p>
+                    <p style="margin-top:10px; color: #626F47;">{row['summary']}</p>
                     <a href="{row['url']}" target="_blank" style="color:#1a73e8;">🔗 Read more</a>
                 </div>
                 """,
@@ -293,13 +292,17 @@ elif st.session_state.page == "Trending":
       padding-bottom: 40px;
     }}
     .swiper-slide {{
-      background: #27548A;
+      background: #FFCF50;
       border-radius: 6px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      align-items: flex-start;
+      min-height: 250px;
+      box-sizing: border-box;
+      overflow-wrap: break-word;
     }}
     </style>
     <div class="swiper-container">
@@ -326,9 +329,9 @@ elif st.session_state.page == "Trending":
         slides_html += f"""
         <div class="swiper-slide">
           <img src="{get_logo(row['source'])}" style="width:64px;height:auto;margin-bottom:10px;" />
-          <h4>{row["title"]}</h4>
-          <p>{row["summary"]}</p>
-          <a href="{row["url"]}" target="_blank">🔗 Read more</a>
+          <h4 style="color: #626F47;">{row["title"]}</h4>
+          <p style="color: #626F47;">{row["summary"]}</p>
+          <a href="{row["url"]}" target="_blank" style="color:#1a73e8;">🔗 Read more</a>
         </div>
         """
 
